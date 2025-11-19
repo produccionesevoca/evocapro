@@ -2,26 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { MarketingModal } from '../components/modals/MarketingModal.tsx';
 import { ThemeToggle } from '../components/ui/ThemeToggle.tsx';
 import { SEO } from '../components/SEO.tsx';
+// Import Shared Components
+import { ValueProp } from '../components/ui/ValueProp.tsx';
+import { ServiceCard } from '../components/ui/ServiceCard.tsx';
 
-const FeatureIcon: React.FC<{ children: React.ReactNode, textColorClass: string }> = ({ children, textColorClass }) => (
-  <div className="flex items-start md:items-center text-left animate-fadeInUp">
-    <div className="flex-shrink-0 p-2 rounded-full bg-brand-orange/10 mr-3">
-        <svg className="w-5 h-5 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-    </div>
-    <span className={`${textColorClass} font-medium font-sans`}>{children}</span>
-  </div>
-);
-
-const ServiceCard: React.FC<{ title: string; description: string; icon: React.ReactNode; cardClasses: string; titleClasses: string; textClasses: string }> = ({ title, description, icon, cardClasses, titleClasses, textClasses }) => (
-    <div className={`${cardClasses} p-6 rounded-xl text-left shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border-t-4 border-transparent hover:border-brand-orange group h-full`}>
-        <div className="mb-4 text-brand-orange transform group-hover:scale-110 transition-transform duration-300">
-            {icon}
-        </div>
-        <h3 className={`text-xl font-bold ${titleClasses} mb-2 font-serif`}>{title}</h3>
-        <p className={`text-sm ${textClasses} font-sans`}>{description}</p>
-    </div>
-);
-
+// Local Component (Specific to Marketing Page)
 const StepCard: React.FC<{ number: string; title: string; description: string; cardClasses: string; titleClasses: string; descriptionClasses: string; isLast?: boolean }> = ({ number, title, description, cardClasses, titleClasses, descriptionClasses, isLast }) => (
     <div className="flex flex-col items-center text-center relative z-10 flex-1 px-4">
         <div className="w-16 h-16 rounded-full bg-brand-orange text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg shadow-brand-orange/30 font-serif">
@@ -50,8 +35,6 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
 
     const isDark = theme === 'dark';
 
-    // AIO: Structured Data for Marketing Service + FAQ
-    // This helps Google and AI Assistants answer "Who does Data-Driven Marketing?"
     const marketingSchema = {
         "@context": "https://schema.org",
         "@graph": [
@@ -114,9 +97,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
         <header className={`fixed top-0 left-0 right-0 z-50 ${themeClasses.header}`}>
             <div className="w-full max-w-[1200px] mx-auto px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-2 cursor-pointer" onClick={onNavigateBack}>
-
-                    <img className="w-[150px]" src="/assets/logos/evocapro-logo-orange.png" alt="Descripción de mi logo" />
-
+                    <img className="w-[150px]" src="/assets/logos/evocapro-logo-orange.png" alt="Evoca PRO Logo" />
                 </div>
                 <div className="flex items-center gap-4">
                     <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
@@ -133,7 +114,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
                 <div className="absolute inset-0 z-0">
                     <img 
                         src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                        alt="Dashboard de Analítica Web y Estrategia Digital en monitores" 
+                        alt="Dashboard de Analítica Web" 
                         className="w-full h-full object-cover"
                     />
                     <div className={`absolute inset-0 bg-gradient-to-r ${isDark ? 'from-brand-dark via-brand-dark/90 to-brand-medium/80' : 'from-brand-light via-brand-light/90 to-brand-light/50'}`}></div>
@@ -188,9 +169,9 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
 
             <div className={`${isDark ? 'bg-brand-medium' : 'bg-white shadow-sm'} py-8 border-y ${isDark ? 'border-white/5' : 'border-gray-100'}`}>
                 <div className="w-full max-w-[1200px] mx-auto px-6 flex flex-wrap justify-center gap-8 md:gap-16">
-                    <FeatureIcon textColorClass={themeClasses.textSecondary}>Estrategias Data-Driven</FeatureIcon>
-                    <FeatureIcon textColorClass={themeClasses.textSecondary}>Certificados en Google Analytics 4</FeatureIcon>
-                    <FeatureIcon textColorClass={themeClasses.textSecondary}>Optimización de Conversión (CRO)</FeatureIcon>
+                    <ValueProp textColorClass={themeClasses.textSecondary}>Estrategias Data-Driven</ValueProp>
+                    <ValueProp textColorClass={themeClasses.textSecondary}>Certificados en Google Analytics 4</ValueProp>
+                    <ValueProp textColorClass={themeClasses.textSecondary}>Optimización de Conversión (CRO)</ValueProp>
                 </div>
             </div>
 
@@ -201,7 +182,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
                             <div className="absolute -top-4 -left-4 w-24 h-24 bg-brand-orange rounded-full opacity-20 blur-2xl"></div>
                             <img 
                                 src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
-                                alt="Equipo de marketing digital analizando datos en una oficina moderna" 
+                                alt="Equipo de marketing digital" 
                                 className="rounded-lg shadow-2xl relative z-10"
                             />
                             <div className={`absolute -bottom-6 -right-6 p-6 rounded-lg shadow-xl ${themeClasses.card} max-w-xs hidden lg:block`}>
@@ -244,6 +225,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
                         <ServiceCard 
                             title="Estrategia E-commerce"
                             description="Auditoría de UX/UI, recuperación de carritos abandonados y estrategias de fidelización (LTV)."
+                            borderClass="border-t-4"
                             icon={<svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>}
                             cardClasses={themeClasses.card}
                             titleClasses={themeClasses.textPrimary}
@@ -252,6 +234,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
                         <ServiceCard 
                             title="Paid Media (Ads)"
                             description="Gestión avanzada de Google Ads, Meta Ads y LinkedIn Ads con enfoque en CPA y ROAS."
+                            borderClass="border-t-4"
                             icon={<svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /></svg>}
                             cardClasses={themeClasses.card}
                             titleClasses={themeClasses.textPrimary}
@@ -260,6 +243,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
                         <ServiceCard 
                             title="Analítica Web (GA4)"
                             description="Implementación técnica, configuración de eventos de conversión y Server-Side Tracking."
+                            borderClass="border-t-4"
                             icon={<svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>}
                             cardClasses={themeClasses.card}
                             titleClasses={themeClasses.textPrimary}
@@ -268,6 +252,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
                         <ServiceCard 
                             title="CRO & Experimentación"
                             description="A/B testing continuo en landing pages para mejorar la tasa de conversión sin aumentar el tráfico."
+                            borderClass="border-t-4"
                             icon={<svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>}
                             cardClasses={themeClasses.card}
                             titleClasses={themeClasses.textPrimary}
@@ -276,6 +261,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
                         <ServiceCard 
                             title="Desarrollo Web"
                             description="Sitios corporativos y tiendas WooCommerce optimizados para SEO y velocidad de carga."
+                            borderClass="border-t-4"
                             icon={<svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>}
                             cardClasses={themeClasses.card}
                             titleClasses={themeClasses.textPrimary}
@@ -284,6 +270,7 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
                         <ServiceCard 
                             title="CRM & Automation"
                             description="Email marketing automatizado y segmentación de base de datos para nutrir leads."
+                            borderClass="border-t-4"
                             icon={<svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>}
                             cardClasses={themeClasses.card}
                             titleClasses={themeClasses.textPrimary}

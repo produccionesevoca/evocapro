@@ -1,13 +1,13 @@
 import React from 'react';
 import { SplitSection } from '../components/SplitSection.tsx';
-import { SEO } from '../components/SEO.tsx';
+import { SEO } from '..//components/SEO.tsx'; 
 
 // Background Components
 const MarketingBackground: React.FC = () => (
   <div className="absolute inset-0 overflow-hidden">
     <img
       src="https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg"
-      alt="Red de datos abstracta representando marketing digital y analítica"
+      alt="Red de datos abstracta marketing"
       className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover -translate-x-1/2 -translate-y-1/2"
     />
     <div className="absolute inset-0 bg-brand-dark opacity-80"></div>
@@ -33,13 +33,12 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
-  // AIO: Organization Schema allows AI to understand the entity "Evoca PRO"
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Evoca PRO",
     "url": "https://evocapro.com",
-    "logo": "https://evocapro.com/logo.png",
+    "logo": "https://evocapro.com/assets/logos/evocapro-logo-orange.png",
     "description": "Agencia especializada en Marketing Digital y Producción Audiovisual.",
     "sameAs": [
       "https://www.linkedin.com/company/evocapro",
@@ -50,7 +49,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const marketingData = {
     logoText: "Evoca PRO",
     title: "Marketing Digital & E-commerce",
-    description: "Impulsamos tu crecimiento con estrategias de marketing y analítica web basadas en datos. Convertimos clics en clientes y optimizamos tu retorno de inversión.",
+    description: "Impulsamos tu crecimiento con estrategias de marketing y analítica web basadas en datos. Convertimos clics en clientes.",
     buttonText: "Descubrir Estrategias",
     background: <MarketingBackground />,
     onClick: () => onNavigate('marketing'),
@@ -59,7 +58,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const filmData = {
     logoText: "Evoca PRO",
     title: "Cine & Televisión",
-    description: "Creamos contenido audiovisual de alto impacto que cuenta tu historia y conecta con tu audiencia. Producción de calidad cinematográfica para marcas que inspiran.",
+    description: "Creamos contenido audiovisual de alto impacto que cuenta tu historia. Producción de calidad cinematográfica.",
     buttonText: "Explorar Proyectos",
     background: <FilmBackground />,
     onClick: () => onNavigate('film'),
@@ -69,7 +68,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
     <>
       <SEO 
         title="Agencia Creativa y Estratégica"
-        description="Evoca PRO une lo mejor de dos mundos: Marketing Digital basado en datos y Producción Audiovisual Cinematográfica. Descubre cómo elevamos tu marca."
+        description="Evoca PRO une lo mejor de dos mundos: Marketing Digital basado en datos y Producción Audiovisual Cinematográfica."
         keywords="marketing digital, producción audiovisual, analítica web, video corporativo, agencia creativa"
         schema={organizationSchema}
       />

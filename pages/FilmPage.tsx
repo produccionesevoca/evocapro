@@ -2,47 +2,11 @@ import React, { useState, useEffect } from "react";
 import { FilmModal } from "../components/modals/FilmModal.tsx";
 import { ThemeToggle } from "../components/ui/ThemeToggle.tsx";
 import { SEO } from "../components/SEO.tsx";
+// Import shared components
+import { StatsDisplay } from "../components/ui/StatsDisplay.tsx";
+import { ServiceCard } from "../components/ui/ServiceCard.tsx";
 
-const FeatureIcon: React.FC<{
-  label: string;
-  value: string;
-  textColorClass: string;
-}> = ({ label, value, textColorClass }) => (
-  <div className="flex flex-col items-center justify-center p-4 animate-fadeInUp">
-    <span className="text-3xl md:text-5xl font-bold text-brand-orange mb-2 font-serif">
-      {value}
-    </span>
-    <span
-      className={`text-sm uppercase tracking-widest ${textColorClass} font-sans`}
-    >
-      {label}
-    </span>
-  </div>
-);
-
-const ServiceCard: React.FC<{
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  cardClasses: string;
-  titleClasses: string;
-  textClasses: string;
-}> = ({ title, description, icon, cardClasses, titleClasses, textClasses }) => (
-  <div
-    className={`${cardClasses} p-8 rounded-xl text-left shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-l-4 border-transparent hover:border-brand-orange group h-full`}
-  >
-    <div className="mb-6 text-brand-orange transform group-hover:scale-110 transition-transform duration-300 bg-brand-orange/10 w-14 h-14 rounded-lg flex items-center justify-center">
-      {icon}
-    </div>
-    <h3 className={`text-xl font-bold ${titleClasses} mb-3 font-serif`}>
-      {title}
-    </h3>
-    <p className={`text-sm leading-relaxed ${textClasses} font-sans`}>
-      {description}
-    </p>
-  </div>
-);
-
+// Local component for the Vertical Timeline (Specific to Film Page)
 const StepCard: React.FC<{
   number: string;
   title: string;
@@ -77,12 +41,11 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
 
   const isDark = theme === "dark";
 
-  // AIO: Structured Data for Video Production + FAQ
   const filmSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "ProfessionalService", // Can also be VideoProductionService in more specific vocabularies
+        "@type": "ProfessionalService",
         name: "Evoca PRO - Producción Audiovisual",
         description:
           "Productora audiovisual especializada en video corporativo, spots publicitarios, documentales y contenido cinematográfico para marcas.",
@@ -98,14 +61,6 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
             acceptedAnswer: {
               "@type": "Answer",
               text: "Un video corporativo estándar toma entre 2 a 4 semanas. Proyectos más complejos como documentales o comerciales con VFX pueden requerir de 6 a 8 semanas.",
-            },
-          },
-          {
-            "@type": "Question",
-            name: "¿Ustedes proveen los actores y locaciones?",
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: "Sí. Nos encargamos de toda la logística de producción, incluyendo casting de talento, scouting de locaciones, permisos y catering.",
             },
           },
         ],
@@ -157,7 +112,7 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
             <img
               className="w-[150px]"
               src="/assets/logos/evocapro-logo-orange.png"
-              alt="Descripción de mi logo"
+              alt="Evoca PRO Logo"
             />
           </div>
           <div className="flex items-center gap-4">
@@ -177,7 +132,7 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
           <div className="absolute inset-0 z-0">
             <img
               src="https://images.pexels.com/photos/2510428/pexels-photo-2510428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              alt="Set de filmación profesional con iluminación cinematográfica"
+              alt="Set de filmación profesional"
               className="w-full h-full object-cover"
             />
             <div
@@ -261,26 +216,10 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
           } py-8`}
         >
           <div className="w-full max-w-[1200px] mx-auto px-6 flex flex-wrap justify-center md:justify-around gap-8">
-            <FeatureIcon
-              label="Años de Experiencia"
-              value="10+"
-              textColorClass={themeClasses.textSecondary}
-            />
-            <FeatureIcon
-              label="Proyectos Entregados"
-              value="250+"
-              textColorClass={themeClasses.textSecondary}
-            />
-            <FeatureIcon
-              label="Premios Creativos"
-              value="14"
-              textColorClass={themeClasses.textSecondary}
-            />
-            <FeatureIcon
-              label="Calidad de Producción"
-              value="6K"
-              textColorClass={themeClasses.textSecondary}
-            />
+            <StatsDisplay label="Años de Experiencia" value="10+" textColorClass={themeClasses.textSecondary} />
+            <StatsDisplay label="Proyectos Entregados" value="250+" textColorClass={themeClasses.textSecondary} />
+            <StatsDisplay label="Premios Creativos" value="14" textColorClass={themeClasses.textSecondary} />
+            <StatsDisplay label="Calidad de Producción" value="6K" textColorClass={themeClasses.textSecondary} />
           </div>
         </div>
 
@@ -362,20 +301,9 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               <ServiceCard
                 title="Spot Publicitario"
                 description="Comerciales de alto nivel para TV y Digital. Creamos piezas memorables que impulsan ventas y posicionamiento."
+                borderClass="border-l-4"
                 icon={
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
-                    />
-                  </svg>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -384,20 +312,9 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               <ServiceCard
                 title="Video Corporativo"
                 description="Comunica la cultura, valores y procesos de tu empresa. Ideal para inducción, inversores o B2B."
+                borderClass="border-l-4"
                 icon={
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    />
-                  </svg>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -406,20 +323,9 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               <ServiceCard
                 title="Cobertura de Eventos"
                 description="Aftermovies dinámicos de congresos, lanzamientos y activaciones de marca."
+                borderClass="border-l-4"
                 icon={
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                    />
-                  </svg>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -428,20 +334,9 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               <ServiceCard
                 title="Motion Graphics 2D/3D"
                 description="Explicación de productos complejos a través de animación. Infografías animadas y branding visual."
+                borderClass="border-l-4"
                 icon={
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
-                    />
-                  </svg>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -450,26 +345,9 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               <ServiceCard
                 title="Fotografía Publicitaria"
                 description="Producción fotográfica para e-commerce, campañas de moda, gastronomía y arquitectura."
+                borderClass="border-l-4"
                 icon={
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -478,20 +356,9 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               <ServiceCard
                 title="Drones & Aéreos"
                 description="Tomas aéreas espectaculares con pilotos certificados y drones de última generación (FPV y Cine)."
+                borderClass="border-l-4"
                 icon={
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                    />
-                  </svg>
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -520,7 +387,7 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               </p>
               <img
                 src="https://images.pexels.com/photos/3205567/pexels-photo-3205567.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt="Sala de edición y postproducción de video profesional"
+                alt="Sala de edición"
                 className="rounded-xl shadow-2xl w-full object-cover"
               />
             </div>
@@ -557,7 +424,7 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
           </div>
         </section>
 
-        {/* Works / Portfolio Teaser (Static Placeholder) */}
+        {/* Works Placeholder */}
         <section className="relative py-24 bg-black">
           <div className="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
           <div className="w-full max-w-[1200px] mx-auto px-6 relative z-10">
@@ -575,11 +442,10 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               </button>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {/* Project 1 */}
               <div className="group relative overflow-hidden rounded-lg aspect-video cursor-pointer">
                 <img
                   src="https://images.pexels.com/photos/1117132/pexels-photo-1117132.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt="Escena de documental urbano Neon City"
+                  alt="Neon City Doc"
                   className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-4">
@@ -591,11 +457,10 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
                   </p>
                 </div>
               </div>
-              {/* Project 2 */}
               <div className="group relative overflow-hidden rounded-lg aspect-video cursor-pointer">
                 <img
                   src="https://images.pexels.com/photos/2910028/pexels-photo-2910028.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt="Cobertura de evento Fashion Week pasarela"
+                  alt="Fashion Week"
                   className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-4">
@@ -607,11 +472,10 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
                   </p>
                 </div>
               </div>
-              {/* Project 3 */}
               <div className="group relative overflow-hidden rounded-lg aspect-video cursor-pointer">
                 <img
                   src="https://images.pexels.com/photos/1595242/pexels-photo-1595242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt="Grabación de spot publicitario Tech Launch"
+                  alt="Tech Launch"
                   className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center p-4">
@@ -695,7 +559,6 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
           </div>
         </section>
 
-        {/* Final CTA */}
         <section className={`py-24 px-6 text-center ${themeClasses.bg}`}>
           <div className={`w-full max-w-[1200px] mx-auto`}>
             <div
