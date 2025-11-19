@@ -4,23 +4,25 @@ import { HomePage } from './pages/HomePage.tsx';
 import { MarketingPage } from './pages/MarketingPage.tsx';
 import { FilmPage } from './pages/FilmPage.tsx';
 import { WhatsAppButton } from './components/ui/WhatsAppButton.tsx';
+import { Footer } from './components/ui/Footer.tsx'; 
+import { PrivacyPage } from './pages/PrivacyPage.tsx';
+import { TermsPage } from './pages/TermsPage.tsx';
 
-export type PageType = 'home' | 'marketing' | 'film';
+// FIX 1: Added 'privacy' and 'terms' to the allowed types
+export type PageType = 'home' | 'marketing' | 'film' | 'privacy' | 'terms';
 
 const App: React.FC = () => {
-  // 1. Initialize state based on the current URL
-  // This ensures if a user lands on /marketing, they see the Marketing page immediately.
   const getInitialPage = (): PageType => {
     const path = window.location.pathname;
     if (path === '/marketing') return 'marketing';
     if (path === '/film') return 'film';
+    if (path === '/privacy') return 'privacy';
+    if (path === '/terms') return 'terms';
     return 'home';
   };
 
   const [currentPage, setCurrentPage] = useState<PageType>(getInitialPage);
 
-  // 2. Handle Browser "Back/Forward" Buttons
-  // This listens for when the user clicks the browser's back arrow.
   useEffect(() => {
     const handlePopState = () => {
       setCurrentPage(getInitialPage());
@@ -30,8 +32,6 @@ const App: React.FC = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // 3. Navigation Functions that update URL
-  // When we navigate, we now push the new URL to the browser history.
   const navigateTo = (page: PageType) => {
     const path = page === 'home' ? '/' : `/${page}`;
     window.history.pushState({}, '', path);
@@ -45,11 +45,22 @@ const App: React.FC = () => {
 
   return (
     <HelmetProvider>
-      <div className="bg-brand-dark animate-fadeIn">
+      <div className="bg-brand-dark animate-fadeIn relative flex flex-col min-h-screen">
+        
+        {/* Global Floating Elements */}
         <WhatsAppButton />
-        {currentPage === 'home' && <HomePage onNavigate={navigateTo} />}
-        {currentPage === 'marketing' && <MarketingPage onNavigateBack={navigateHome} />}
-        {currentPage === 'film' && <FilmPage onNavigateBack={navigateHome} />}
+
+        {/* Page Content */}
+        <div className="flex-grow">
+          {currentPage === 'home' && <HomePage onNavigate={navigateTo} />}
+          {currentPage === 'marketing' && <MarketingPage onNavigateBack={navigateHome} />}
+          {currentPage === 'film' && <FilmPage onNavigateBack={navigateHome} />}
+          {currentPage === 'privacy' && <PrivacyPage onNavigateBack={navigateHome} />}
+          {currentPage === 'terms' && <TermsPage onNavigateBack={navigateHome} />}
+        </div>
+
+        {currentPage !== 'home' && <Footer onNavigate={navigateTo} />}
+        
       </div>
     </HelmetProvider>
   );
