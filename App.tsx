@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { HomePage } from './pages/HomePage.tsx';
 import { MarketingPage } from './pages/MarketingPage.tsx';
 import { FilmPage } from './pages/FilmPage.tsx';
+import { WhatsAppButton } from './components/ui/WhatsAppButton.tsx';
 
 export type PageType = 'home' | 'marketing' | 'film';
 
@@ -45,6 +46,7 @@ const App: React.FC = () => {
   return (
     <HelmetProvider>
       <div className="bg-brand-dark animate-fadeIn">
+        <WhatsAppButton />
         {currentPage === 'home' && <HomePage onNavigate={navigateTo} />}
         {currentPage === 'marketing' && <MarketingPage onNavigateBack={navigateHome} />}
         {currentPage === 'film' && <FilmPage onNavigateBack={navigateHome} />}
