@@ -108,9 +108,9 @@ export const MarketingPage: React.FC<MarketingPageProps> = ({ onNavigateBack }) 
             </div>
         </header>
         
-        <main className="w-full pt-20">
+        <main className="w-full pt-0 md:pt-20">
             {/* Hero Section */}
-            <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+            <section className="relative min-h-[100vh] md:min-h-[100vh] lg:min-h-[80vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <img 
                         src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 

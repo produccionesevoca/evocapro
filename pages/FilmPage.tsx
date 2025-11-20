@@ -135,13 +135,20 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
               alt="Set de filmación profesional"
               className="w-full h-full object-cover"
             />
+
             <div
               className={`absolute inset-0 bg-gradient-to-b ${
                 isDark
-                  ? "from-brand-dark/80 via-brand-dark/60 to-brand-dark"
-                  : "from-brand-light/40 via-brand-light/20 to-brand-light"
-              } mix-blend-multiply`}
+                  ? "from-brand-dark/80 via-brand-dark/60 to-brand-dark mix-blend-multiply"
+                  : "from-white/30 via-white/80 to-white/60"
+              }`}
             ></div>
+            <div
+              className={`absolute inset-0 bg-radial-gradient from-transparent ${
+                isDark ? "to-brand-dark/80" : "to-transparent"
+              }`}
+            ></div>
+
             <div className="absolute inset-0 bg-radial-gradient from-transparent to-brand-dark/80"></div>
           </div>
 
@@ -216,10 +223,26 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
           } py-8`}
         >
           <div className="w-full max-w-[1200px] mx-auto px-6 flex flex-wrap justify-center md:justify-around gap-8">
-            <StatsDisplay label="Años de Experiencia" value="10+" textColorClass={themeClasses.textSecondary} />
-            <StatsDisplay label="Proyectos Entregados" value="250+" textColorClass={themeClasses.textSecondary} />
-            <StatsDisplay label="Premios Creativos" value="14" textColorClass={themeClasses.textSecondary} />
-            <StatsDisplay label="Calidad de Producción" value="6K" textColorClass={themeClasses.textSecondary} />
+            <StatsDisplay
+              label="Años de Experiencia"
+              value="10+"
+              textColorClass={themeClasses.textSecondary}
+            />
+            <StatsDisplay
+              label="Proyectos Entregados"
+              value="250+"
+              textColorClass={themeClasses.textSecondary}
+            />
+            <StatsDisplay
+              label="Premios Creativos"
+              value="14"
+              textColorClass={themeClasses.textSecondary}
+            />
+            <StatsDisplay
+              label="Calidad de Producción"
+              value="6K"
+              textColorClass={themeClasses.textSecondary}
+            />
           </div>
         </div>
 
@@ -303,7 +326,19 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
                 description="Comerciales de alto nivel para TV y Digital. Creamos piezas memorables que impulsan ventas y posicionamiento."
                 borderClass="border-l-4"
                 icon={
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+                    />
+                  </svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -314,7 +349,19 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
                 description="Comunica la cultura, valores y procesos de tu empresa. Ideal para inducción, inversores o B2B."
                 borderClass="border-l-4"
                 icon={
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    />
+                  </svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -325,7 +372,19 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
                 description="Aftermovies dinámicos de congresos, lanzamientos y activaciones de marca."
                 borderClass="border-l-4"
                 icon={
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
+                  </svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -336,7 +395,19 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
                 description="Explicación de productos complejos a través de animación. Infografías animadas y branding visual."
                 borderClass="border-l-4"
                 icon={
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" /></svg>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
+                    />
+                  </svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -347,7 +418,25 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
                 description="Producción fotográfica para e-commerce, campañas de moda, gastronomía y arquitectura."
                 borderClass="border-l-4"
                 icon={
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -358,7 +447,19 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
                 description="Tomas aéreas espectaculares con pilotos certificados y drones de última generación (FPV y Cine)."
                 borderClass="border-l-4"
                 icon={
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                    />
+                  </svg>
                 }
                 cardClasses={themeClasses.card}
                 titleClasses={themeClasses.textPrimary}
@@ -497,7 +598,7 @@ export const FilmPage: React.FC<FilmPageProps> = ({ onNavigateBack }) => {
         </section>
 
         <section className={`py-24 ${themeClasses.bgAlt}`}>
-          <div className="w-full max-w-[1200px] mx-auto px-6 max-w-3xl">
+          <div className="w-full max-w-[1200px] mx-auto px-6">
             <h2
               className={`text-3xl md:text-4xl font-bold text-center mb-12 ${themeClasses.textPrimary} font-serif`}
             >
