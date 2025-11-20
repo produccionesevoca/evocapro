@@ -19,7 +19,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({ onNavigateBack }) => {
 
       {/* Header / Nav */}
       <div className="fixed top-0 left-0 right-0 bg-brand-dark/90 backdrop-blur-md border-b border-white/5 z-50 px-6 py-4">
-        <div className="max-w-[800px] mx-auto flex justify-between items-center">
+        <div className="max-w-[1200px] mx-auto flex justify-between items-center">
             <div className="flex items-center gap-2" onClick={onNavigateBack}>
                  <img src="/assets/logos/evocapro-logo-orange.png" alt="Logo" className="w-32 cursor-pointer" />
             </div>
@@ -29,7 +29,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({ onNavigateBack }) => {
         </div>
       </div>
 
-      <div className="max-w-[800px] mx-auto px-6">
+      <div className="max-w-[1200px] mx-auto px-6">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-8 font-serif">Términos y Condiciones</h1>
         <p className="text-sm text-gray-500 mb-12">Vigente desde: Noviembre 2025</p>
 

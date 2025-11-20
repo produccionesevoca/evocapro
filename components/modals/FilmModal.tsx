@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFormspree } from '../../hooks/useFormspree';
 
 interface FilmModalProps {
     isOpen: boolean;
@@ -7,7 +8,8 @@ interface FilmModalProps {
 }
 
 export const FilmModal: React.FC<FilmModalProps> = ({ isOpen, onClose, isDark }) => {
-    const [step, setStep] = useState<'form' | 'success'>('form');
+    const { submit, isSubmitting, isSuccess, isError, errorMessage, reset } = useFormspree();
+    
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -16,15 +18,26 @@ export const FilmModal: React.FC<FilmModalProps> = ({ isOpen, onClose, isDark })
         details: ''
     });
 
+    // Reiniciamos el formulario si se cierra o abre el modal
     useEffect(() => {
-        if (isOpen) setStep('form');
+        if (isOpen) {
+            reset();
+            setFormData({
+                name: '',
+                email: '',
+                projectType: 'Spot Publicitario',
+                budget: '5k - 10k USD',
+                details: ''
+            });
+        }
     }, [isOpen]);
 
     if (!isOpen) return null;
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setTimeout(() => setStep('success'), 500);
+        // Enviamos el 'subject' para que sepas desde qué formulario llegó el correo
+        submit({ ...formData, _subject: 'Nuevo Lead de Cine - Evoca PRO' });
     };
 
     const inputClasses = `w-full p-3 rounded-lg border ${isDark 
@@ -43,7 +56,7 @@ export const FilmModal: React.FC<FilmModalProps> = ({ isOpen, onClose, isDark })
                 </button>
 
                 <div className="p-8">
-                    {step === 'form' ? (
+                    {!isSuccess ? (
                         <>
                             <div className="mb-6">
                                 <span className="text-brand-orange font-bold uppercase tracking-widest text-xs font-sans">Comenzar Proyecto</span>
@@ -55,31 +68,37 @@ export const FilmModal: React.FC<FilmModalProps> = ({ isOpen, onClose, isDark })
                                     <label className={labelClasses}>Nombre / Empresa</label>
                                     <input 
                                         required 
+                                        name="name"
                                         type="text" 
                                         className={inputClasses} 
                                         placeholder="Tu nombre o el de tu marca"
                                         value={formData.name}
                                         onChange={e => setFormData({...formData, name: e.target.value})}
+                                        disabled={isSubmitting}
                                     />
                                 </div>
                                 <div>
                                     <label className={labelClasses}>Email de Contacto</label>
                                     <input 
                                         required 
+                                        name="email"
                                         type="email" 
                                         className={inputClasses} 
                                         placeholder="contacto@marca.com"
                                         value={formData.email}
                                         onChange={e => setFormData({...formData, email: e.target.value})}
+                                        disabled={isSubmitting}
                                     />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <label className={labelClasses}>Tipo de Proyecto</label>
                                         <select 
+                                            name="projectType"
                                             className={inputClasses}
                                             value={formData.projectType}
                                             onChange={e => setFormData({...formData, projectType: e.target.value})}
+                                            disabled={isSubmitting}
                                         >
                                             <option>Spot Publicitario</option>
                                             <option>Video Corporativo</option>
@@ -91,9 +110,11 @@ export const FilmModal: React.FC<FilmModalProps> = ({ isOpen, onClose, isDark })
                                     <div>
                                         <label className={labelClasses}>Presupuesto Est.</label>
                                         <select 
+                                            name="budget"
                                             className={inputClasses}
                                             value={formData.budget}
                                             onChange={e => setFormData({...formData, budget: e.target.value})}
+                                            disabled={isSubmitting}
                                         >
                                             <option>1k - 5k USD</option>
                                             <option>5k - 10k USD</option>
@@ -105,21 +126,39 @@ export const FilmModal: React.FC<FilmModalProps> = ({ isOpen, onClose, isDark })
                                 <div>
                                     <label className={labelClasses}>Detalles del Proyecto</label>
                                     <textarea 
+                                        name="details"
                                         rows={3} 
                                         className={inputClasses} 
                                         placeholder="Describe brevemente la idea, fecha de rodaje estimada, etc..."
                                         value={formData.details}
                                         onChange={e => setFormData({...formData, details: e.target.value})}
+                                        disabled={isSubmitting}
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="w-full py-4 bg-brand-orange text-white font-bold rounded-full shadow-lg shadow-brand-orange/20 hover:bg-orange-600 hover:shadow-brand-orange/40 transition-all duration-300 mt-4 font-sans uppercase tracking-wide">
-                                    Enviar Propuesta
+                                
+                                {/* Mensaje de Error */}
+                                {isError && (
+                                    <div className="p-3 rounded bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-sans text-center animate-fadeIn">
+                                        {errorMessage}
+                                    </div>
+                                )}
+
+                                <button 
+                                    type="submit" 
+                                    disabled={isSubmitting}
+                                    className={`w-full py-4 font-bold rounded-full shadow-lg font-sans uppercase tracking-wide transition-all duration-300 
+                                        ${isSubmitting 
+                                            ? 'bg-gray-500 cursor-not-allowed opacity-70' 
+                                            : 'bg-brand-orange hover:bg-orange-600 hover:shadow-brand-orange/40 text-white'
+                                        }`}
+                                >
+                                    {isSubmitting ? 'Enviando...' : 'Enviar Propuesta'}
                                 </button>
                             </form>
                         </>
                     ) : (
-                        <div className="text-center py-12">
-                            <div className="w-20 h-20 border-4 border-brand-orange rounded-full flex items-center justify-center mx-auto mb-6 animate-fadeInUp">
+                        <div className="text-center py-12 animate-fadeIn">
+                            <div className="w-20 h-20 border-4 border-brand-orange rounded-full flex items-center justify-center mx-auto mb-6">
                                 <svg className="w-10 h-10 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                             </div>
                             <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-brand-dark'} font-serif`}>¡Corte! Todo listo.</h2>

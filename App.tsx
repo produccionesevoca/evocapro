@@ -8,7 +8,6 @@ import { Footer } from './components/ui/Footer.tsx';
 import { PrivacyPage } from './pages/PrivacyPage.tsx';
 import { TermsPage } from './pages/TermsPage.tsx';
 
-// FIX 1: Added 'privacy' and 'terms' to the allowed types
 export type PageType = 'home' | 'marketing' | 'film' | 'privacy' | 'terms';
 
 const App: React.FC = () => {

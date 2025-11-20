@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFormspree } from '../../hooks/useFormspree';
 
 interface MarketingModalProps {
     isOpen: boolean;
@@ -7,7 +8,8 @@ interface MarketingModalProps {
 }
 
 export const MarketingModal: React.FC<MarketingModalProps> = ({ isOpen, onClose, isDark }) => {
-    const [step, setStep] = useState<'form' | 'success'>('form');
+    const { submit, isSubmitting, isSuccess, isError, errorMessage, reset } = useFormspree();
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -17,15 +19,24 @@ export const MarketingModal: React.FC<MarketingModalProps> = ({ isOpen, onClose,
     });
 
     useEffect(() => {
-        if (isOpen) setStep('form');
+        if (isOpen) {
+            reset();
+            setFormData({
+                name: '',
+                email: '',
+                website: '',
+                service: 'Estrategia Integral',
+                message: ''
+            });
+        }
     }, [isOpen]);
 
     if (!isOpen) return null;
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Simulate API call
-        setTimeout(() => setStep('success'), 500);
+        // Subject personalizado
+        submit({ ...formData, _subject: 'Nuevo Lead Marketing - Evoca PRO' });
     };
 
     const inputClasses = `w-full p-3 rounded-lg border ${isDark 
@@ -44,7 +55,7 @@ export const MarketingModal: React.FC<MarketingModalProps> = ({ isOpen, onClose,
                 </button>
 
                 <div className="p-8">
-                    {step === 'form' ? (
+                    {!isSuccess ? (
                         <>
                             <h2 className={`text-3xl font-bold mb-2 ${isDark ? 'text-white' : 'text-brand-dark'} font-serif`}>Diagnóstico Gratuito</h2>
                             <p className={`mb-6 ${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm font-sans`}>Completa tus datos y nuestros expertos analizarán tu presencia digital.</p>
@@ -54,41 +65,49 @@ export const MarketingModal: React.FC<MarketingModalProps> = ({ isOpen, onClose,
                                     <label className={labelClasses}>Nombre Completo</label>
                                     <input 
                                         required 
+                                        name="name"
                                         type="text" 
                                         className={inputClasses} 
                                         placeholder="Ej. Juan Pérez"
                                         value={formData.name}
                                         onChange={e => setFormData({...formData, name: e.target.value})}
+                                        disabled={isSubmitting}
                                     />
                                 </div>
                                 <div>
                                     <label className={labelClasses}>Email Corporativo</label>
                                     <input 
                                         required 
+                                        name="email"
                                         type="email" 
                                         className={inputClasses} 
                                         placeholder="juan@empresa.com"
                                         value={formData.email}
                                         onChange={e => setFormData({...formData, email: e.target.value})}
+                                        disabled={isSubmitting}
                                     />
                                 </div>
                                 <div>
                                     <label className={labelClasses}>Sitio Web</label>
                                     <input 
                                         required 
+                                        name="website"
                                         type="url" 
                                         className={inputClasses} 
                                         placeholder="https://www.tuempresa.com"
                                         value={formData.website}
                                         onChange={e => setFormData({...formData, website: e.target.value})}
+                                        disabled={isSubmitting}
                                     />
                                 </div>
                                 <div>
                                     <label className={labelClasses}>Servicio de Interés</label>
                                     <select 
+                                        name="service"
                                         className={inputClasses}
                                         value={formData.service}
                                         onChange={e => setFormData({...formData, service: e.target.value})}
+                                        disabled={isSubmitting}
                                     >
                                         <option>Estrategia Integral</option>
                                         <option>Paid Media (Ads)</option>
@@ -100,21 +119,36 @@ export const MarketingModal: React.FC<MarketingModalProps> = ({ isOpen, onClose,
                                 <div>
                                     <label className={labelClasses}>Mensaje Opcional</label>
                                     <textarea 
+                                        name="message"
                                         rows={3} 
                                         className={inputClasses} 
                                         placeholder="Cuéntanos brevemente tus objetivos..."
                                         value={formData.message}
                                         onChange={e => setFormData({...formData, message: e.target.value})}
+                                        disabled={isSubmitting}
                                     ></textarea>
                                 </div>
-                                <button type="submit" className="w-full py-4 bg-brand-orange text-white font-bold rounded-lg shadow-lg shadow-brand-orange/20 hover:bg-orange-600 hover:shadow-brand-orange/40 transition-all duration-300 mt-4 font-sans">
-                                    Solicitar Análisis
+
+                                {/* Mensaje de Error */}
+                                {isError && (
+                                    <div className="p-3 rounded bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-sans text-center animate-fadeIn">
+                                        {errorMessage}
+                                    </div>
+                                )}
+
+                                <button 
+                                    type="submit" 
+                                    disabled={isSubmitting}
+                                    className={`w-full py-4 bg-brand-orange text-white font-bold rounded-lg shadow-lg shadow-brand-orange/20 font-sans transition-all duration-300 mt-4 
+                                    ${isSubmitting ? 'opacity-70 cursor-not-allowed bg-gray-500' : 'hover:bg-orange-600 hover:shadow-brand-orange/40'}`}
+                                >
+                                    {isSubmitting ? 'Enviando...' : 'Solicitar Análisis'}
                                 </button>
                             </form>
                         </>
                     ) : (
-                        <div className="text-center py-10">
-                            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-fadeInUp">
+                        <div className="text-center py-10 animate-fadeIn">
+                            <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
                                 <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                             </div>
                             <h2 className={`text-3xl font-bold mb-4 ${isDark ? 'text-white' : 'text-brand-dark'} font-serif`}>¡Solicitud Recibida!</h2>
